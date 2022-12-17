@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/details"
+    tools:text="Some details of a number"
+    android:gravity="center_horizontal"
+    android:padding="@dimen/small"
+    android:textAppearance="@style/TextAppearance.AppCompat.Title" />

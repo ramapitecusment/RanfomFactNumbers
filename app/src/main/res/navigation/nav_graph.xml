@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/numbersFragment">
+
+    <fragment
+        android:id="@+id/numbersFragment"
+        tools:layout="@layout/fragment_numbers"
+        android:name="com.example.ranfomfactnumbers.numbers.presentation.NumbersFragment">
+        <action
+            android:id="@+id/toDetailsFragment"
+            app:destination="@id/detailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/detailsFragment"
+        tools:layout="@layout/fragment_details"
+        android:name="com.example.ranfomfactnumbers.details.presentation.DetailsFragment">
+        <argument
+            android:name="text"
+            app:argType="string" />
+    </fragment>
+</navigation>
