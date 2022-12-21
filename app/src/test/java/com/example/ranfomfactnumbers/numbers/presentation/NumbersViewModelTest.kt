@@ -1,5 +1,6 @@
 package com.example.ranfomfactnumbers.numbers.presentation
 
+import com.example.ranfomfactnumbers.numbers.domain.NumbersInteractor
 import junit.framework.TestCase.assertEquals
 import org.junit.Test
 

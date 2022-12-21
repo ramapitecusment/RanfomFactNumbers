@@ -1,6 +1,9 @@
 package com.example.ranfomfactnumbers.numbers.presentation
 
+import com.example.ranfomfactnumbers.numbers.domain.NumbersInteractor
+
 class NumbersViewModel(
-    private val communications: NumbersCommunications
+    private val interactor: NumbersInteractor,
+    private val communications: NumbersCommunications,
 ) {
 }
