@@ -1,6 +1,8 @@
 package com.example.ranfomfactnumbers.numbers.presentation
 
+import com.example.ranfomfactnumbers.numbers.domain.NumberFact
 import com.example.ranfomfactnumbers.numbers.domain.NumbersInteractor
+import com.example.ranfomfactnumbers.numbers.domain.NumbersResult
 import junit.framework.TestCase.assertEquals
 import org.junit.Test
 
@@ -18,7 +20,7 @@ class NumbersViewModelTest {
         val interactor = TestNumbersInteractor()
 
         // 1. init
-        val viewModel = NumbersViewModel(communications, interactor)
+        val viewModel = NumbersViewModel(interactor, communications)
         interactor.changeExpectedResult(NumbersResult.Success())
         // 2. action
         viewModel.init(isFirstRun = true)
@@ -28,7 +30,7 @@ class NumbersViewModelTest {
         assertEquals(false, communications.progressCalledList[1])
 
         assertEquals(1, communications.stateCalledList.size)
-        assertEquals(uiState.Success(emptyList<NumberFact>()), communications.stateCalledList[0])
+        assertEquals(UiState.Success(), communications.stateCalledList[0])
 
         assertEquals(0, communications.numbersList.size)
         assertEquals(0, communications.timesShowList)
@@ -45,7 +47,7 @@ class NumbersViewModelTest {
         assertEquals(false, communications.progressCalledList[3])
 
         assertEquals(2, communications.stateCalledList.size)
-        assertEquals(uiState.Error("No internet connection"), communications.stateCalledList[1])
+        assertEquals(UiState.Error("No internet connection"), communications.stateCalledList[1])
         assertEquals(0, communications.timesShowList)
 
         // rotate screen
@@ -64,7 +66,7 @@ class NumbersViewModelTest {
         val communications = TestNumbersCommunications()
         val interactor = TestNumbersInteractor()
 
-        val viewModel = NumbersViewModel(communications, interactor)
+        val viewModel = NumbersViewModel(interactor, communications)
 
         viewModel.getFact("")
 
@@ -73,7 +75,7 @@ class NumbersViewModelTest {
         assertEquals(0, communications.progressCalledList.size)
 
         assertEquals(1, communications.stateCalledList.size)
-        assertEquals(uiState.Error("Entered number is empty"), communications.stateCalledList[0])
+        assertEquals(UiState.Error("Entered number is empty"), communications.stateCalledList[0])
 
         assertEquals(0, communications.timesShowList)
     }
@@ -86,7 +88,7 @@ class NumbersViewModelTest {
         val communications = TestNumbersCommunications()
         val interactor = TestNumbersInteractor()
 
-        val viewModel = NumbersViewModel(communications, interactor)
+        val viewModel = NumbersViewModel(interactor, communications)
 
         interactor.changeExpectedResult(NumbersResult.Success(listOf(NumberFact("45", "random fact about 45"))))
         viewModel.getFact("45")
@@ -100,7 +102,7 @@ class NumbersViewModelTest {
         assertEquals(false, communications.progressCalledList[1])
 
         assertEquals(1, communications.stateCalledList.size)
-        assertEquals(uiState.Success(), communications.stateCalledList[0])
+        assertEquals(UiState.Success(), communications.stateCalledList[0])
 
         assertEquals(1, communications.timesShowList)
         assertEquals(NumberUi("45", "fact about 45"), communications.numbersList[0])
@@ -109,7 +111,7 @@ class NumbersViewModelTest {
     private class TestNumbersCommunications : NumbersCommunications {
 
         val progressCalledList = mutableListOf<Boolean>()
-        val stateCalledList = mutableListOf<Boolean>()
+        val stateCalledList = mutableListOf<UiState>()
         var timesShowList = 0
         val numbersList = mutableListOf<NumberUi>()
 
@@ -117,7 +119,7 @@ class NumbersViewModelTest {
             progressCalledList.add(show)
         }
 
-        override fun showState(state: uiState) {
+        override fun showState(state: UiState) {
             stateCalledList.add(state)
         }
 

@@ -6,4 +6,7 @@ class NumbersViewModel(
     private val interactor: NumbersInteractor,
     private val communications: NumbersCommunications,
 ) {
+
+
+
 }
