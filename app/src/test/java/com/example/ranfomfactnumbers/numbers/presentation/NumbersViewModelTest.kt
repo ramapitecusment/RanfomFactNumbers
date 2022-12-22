@@ -1,5 +1,7 @@
 package com.example.ranfomfactnumbers.numbers.presentation
 
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
 import com.example.ranfomfactnumbers.numbers.domain.NumberFact
 import com.example.ranfomfactnumbers.numbers.domain.NumbersInteractor
 import com.example.ranfomfactnumbers.numbers.domain.NumbersResult
@@ -20,7 +22,8 @@ class NumbersViewModelTest {
         val interactor = TestNumbersInteractor()
 
         // 1. init
-        val viewModel = NumbersViewModel(interactor, communications)
+        val mapper = NumbersResultMapper(NumberUiMapper(), communications)
+        val viewModel = NumbersViewModel(interactor, communications, mapper)
         interactor.changeExpectedResult(NumbersResult.Success())
         // 2. action
         viewModel.init(isFirstRun = true)
@@ -30,14 +33,14 @@ class NumbersViewModelTest {
         assertEquals(false, communications.progressCalledList[1])
 
         assertEquals(1, communications.stateCalledList.size)
-        assertEquals(UiState.Success(), communications.stateCalledList[0])
+        assertEquals(UiState.Success, communications.stateCalledList[0])
 
         assertEquals(0, communications.numbersList.size)
         assertEquals(0, communications.timesShowList)
 
         // get some data
         interactor.changeExpectedResult(NumbersResult.Failure("No internet connection"))
-        viewModel.fetchRandomNumberDsts()
+        viewModel.fetchRandomNumberFact()
 
         assertEquals(true, communications.progressCalledList[2])
 
@@ -66,9 +69,10 @@ class NumbersViewModelTest {
         val communications = TestNumbersCommunications()
         val interactor = TestNumbersInteractor()
 
-        val viewModel = NumbersViewModel(interactor, communications)
+        val mapper = NumbersResultMapper(NumberUiMapper(), communications)
+        val viewModel = NumbersViewModel(interactor, communications, mapper)
 
-        viewModel.getFact("")
+        viewModel.fetchNumberFact("")
 
         assertEquals(0, interactor.fetchAboutNumberCalledList.size)
 
@@ -88,10 +92,11 @@ class NumbersViewModelTest {
         val communications = TestNumbersCommunications()
         val interactor = TestNumbersInteractor()
 
-        val viewModel = NumbersViewModel(interactor, communications)
+        val mapper = NumbersResultMapper(NumberUiMapper(), communications)
+        val viewModel = NumbersViewModel(interactor, communications, mapper)
 
         interactor.changeExpectedResult(NumbersResult.Success(listOf(NumberFact("45", "random fact about 45"))))
-        viewModel.getFact("45")
+        viewModel.fetchNumberFact("45")
 
         assertEquals(true, communications.progressCalledList[0])
 
@@ -102,7 +107,7 @@ class NumbersViewModelTest {
         assertEquals(false, communications.progressCalledList[1])
 
         assertEquals(1, communications.stateCalledList.size)
-        assertEquals(UiState.Success(), communications.stateCalledList[0])
+        assertEquals(UiState.Success, communications.stateCalledList[0])
 
         assertEquals(1, communications.timesShowList)
         assertEquals(NumberUi("45", "fact about 45"), communications.numbersList[0])
@@ -119,8 +124,8 @@ class NumbersViewModelTest {
             progressCalledList.add(show)
         }
 
-        override fun showState(state: UiState) {
-            stateCalledList.add(state)
+        override fun showState(uiState: UiState) {
+            stateCalledList.add(uiState)
         }
 
         override fun showList(list: List<NumberUi>) {
@@ -128,6 +133,11 @@ class NumbersViewModelTest {
             numbersList.addAll(list)
         }
 
+        override fun observeProgress(owner: LifecycleOwner, observer: Observer<Boolean>) = Unit
+
+        override fun observeState(owner: LifecycleOwner, observer: Observer<UiState>) = Unit
+
+        override fun observeList(owner: LifecycleOwner, observer: Observer<List<NumberUi>>) = Unit
     }
 
     private class TestNumbersInteractor : NumbersInteractor {

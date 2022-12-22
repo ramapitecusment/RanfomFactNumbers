@@ -12,8 +12,8 @@ interface NumbersCommunications : ObserveNumbers {
     fun showList(list: List<NumberUi>)
 
     class Base(
-        private val progress: ProgressCommunication,
         private val state: NumberStateCommunication,
+        private val progress: ProgressCommunication,
         private val numbersList: NumbersListCommunication,
     ) : NumbersCommunications {
 

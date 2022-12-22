@@ -5,6 +5,10 @@ data class NumberFact(
     private val fact: String
 ) {
 
-    // todo method
+    interface Mapper<T> {
+        fun map(id: String, fact: String): T
+    }
+
+    fun <T> map(mapper: Mapper<T>) = mapper.map(id, fact)
 
 }

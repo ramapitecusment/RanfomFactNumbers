@@ -3,15 +3,15 @@ package com.example.ranfomfactnumbers.numbers.presentation
 sealed class UiState {
 
     interface Mapper<T> {
-        fun map(list: List<NumberUi>, message: String): T
+        fun map(message: String): T
     }
 
     abstract fun <T> map(mapper: Mapper<T>): T
 
-    class Success(private val list: List<NumberUi> = emptyList()) : UiState() {
+    object Success : UiState() {
 
         override fun <T> map(mapper: Mapper<T>): T {
-            return mapper.map(list, "")
+            return mapper.map("")
         }
 
     }
@@ -19,7 +19,7 @@ sealed class UiState {
     class Error(private val message: String) : UiState() {
 
         override fun <T> map(mapper: Mapper<T>): T {
-            return mapper.map(emptyList(), message)
+            return mapper.map(message)
         }
 
     }
