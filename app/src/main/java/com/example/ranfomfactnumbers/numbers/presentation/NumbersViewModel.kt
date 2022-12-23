@@ -10,35 +10,25 @@ import com.example.ranfomfactnumbers.numbers.domain.NumbersResult
 import kotlinx.coroutines.launch
 
 class NumbersViewModel(
-    private val dispatchers: DispatchersList,
     private val interactor: NumbersInteractor,
     private val manageResources: ManageResources,
-    private val mapper: NumbersResult.Mapper<Unit>,
     private val communications: NumbersCommunications,
+    private val handleNumbersRequest: HandleNumbersRequest,
 ) : ViewModel(), ObserveNumbers, FetchNumbers {
 
     override fun init(isFirstRun: Boolean) {
-        if (isFirstRun) doAsync { interactor.init() }
+        if (isFirstRun) handleNumbersRequest.handle(viewModelScope) { interactor.init() }
     }
 
     override fun fetchRandomNumberFact() {
-        doAsync { interactor.factAboutRandomNumber() }
+        handleNumbersRequest.handle(viewModelScope) { interactor.factAboutRandomNumber() }
     }
 
     override fun fetchNumberFact(number: String) {
-        if (number.isEmpty()) {
-            val text = manageResources.string(R.string.empty_number_error_message)
-            communications.showState(UiState.Error(text))
-        } else doAsync { interactor.factAboutNumber(number) }
-    }
-
-    private fun doAsync(block: suspend () -> NumbersResult) {
-        communications.showProgress(true)
-        viewModelScope.launch(dispatchers.io()) {
-            val result = block.invoke()
-            communications.showProgress(false)
-            result.map(mapper)
-        }
+        if (number.isEmpty())
+            communications.showState(UiState.Error(manageResources.string(R.string.empty_number_error_message)))
+        else
+            handleNumbersRequest.handle(viewModelScope) { interactor.factAboutNumber(number) }
     }
 
     override fun observeProgress(owner: LifecycleOwner, observer: Observer<Boolean>) {

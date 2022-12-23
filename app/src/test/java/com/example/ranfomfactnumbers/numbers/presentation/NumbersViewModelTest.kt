@@ -18,6 +18,7 @@ class NumbersViewModelTest : BaseTest() {
     private lateinit var interactor: TestNumbersInteractor
     private lateinit var manageResources: TestManageResources
     private lateinit var communications: TestNumbersCommunications
+    private lateinit var handleNumbersRequest: HandleNumbersRequest
 
     @Before
     fun init() {
@@ -25,9 +26,11 @@ class NumbersViewModelTest : BaseTest() {
         interactor = TestNumbersInteractor()
         manageResources = TestManageResources()
         communications = TestNumbersCommunications()
-
         mapper = NumbersResultMapper(NumberUiMapper(), communications)
-        viewModel = NumbersViewModel(dispatchers, interactor, manageResources, mapper, communications)
+        handleNumbersRequest = HandleNumbersRequest.Base(dispatchers, communications, mapper)
+
+
+        viewModel = NumbersViewModel(interactor, manageResources, communications, handleNumbersRequest)
     }
 
     /**
