@@ -8,7 +8,7 @@ sealed class NumbersResult {
 
     abstract fun <T> map(mapper: Mapper<T>): T
 
-    class Success(private val list: List<NumberFact> = emptyList()) : NumbersResult() {
+    data class Success(private val list: List<NumberFact> = emptyList()) : NumbersResult() {
 
         override fun <T> map(mapper: Mapper<T>): T {
             return mapper.map(list, "")
@@ -16,7 +16,7 @@ sealed class NumbersResult {
 
     }
 
-    class Failure(private val message: String) : NumbersResult() {
+    data class Failure(private val message: String) : NumbersResult() {
 
         override fun <T> map(mapper: Mapper<T>): T {
             return mapper.map(emptyList(), message)

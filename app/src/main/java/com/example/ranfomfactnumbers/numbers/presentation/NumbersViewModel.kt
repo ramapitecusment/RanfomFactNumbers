@@ -18,31 +18,26 @@ class NumbersViewModel(
 ) : ViewModel(), ObserveNumbers, FetchNumbers {
 
     override fun init(isFirstRun: Boolean) {
-        if (isFirstRun) {
-            communications.showProgress(true)
-            viewModelScope.launch {
-                val result = interactor.init()
-                communications.showProgress(false)
-                result.map(mapper)
-            }
-        }
+        if (isFirstRun) doAsync { interactor.init() }
     }
 
     override fun fetchRandomNumberFact() {
-
+        doAsync { interactor.factAboutRandomNumber() }
     }
 
     override fun fetchNumberFact(number: String) {
         if (number.isEmpty()) {
             val text = manageResources.string(R.string.empty_number_error_message)
             communications.showState(UiState.Error(text))
-        } else {
-            communications.showProgress(true)
-            viewModelScope.launch {
-                val result = interactor.factAboutNumber(number)
-                communications.showProgress(false)
-                result.map(mapper)
-            }
+        } else doAsync { interactor.factAboutNumber(number) }
+    }
+
+    private fun doAsync(block: suspend () -> NumbersResult) {
+        communications.showProgress(true)
+        viewModelScope.launch(dispatchers.io()) {
+            val result = block.invoke()
+            communications.showProgress(false)
+            result.map(mapper)
         }
     }
 

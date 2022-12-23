@@ -5,14 +5,8 @@ import com.example.ranfomfactnumbers.numbers.domain.NumbersInteractor
 import com.example.ranfomfactnumbers.numbers.domain.NumbersResult
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.StandardTestDispatcher
-import kotlinx.coroutines.test.TestCoroutineDispatcher
-import kotlinx.coroutines.test.resetMain
-import kotlinx.coroutines.test.setMain
-import org.junit.After
+import kotlinx.coroutines.test.*
 import org.junit.Before
 import org.junit.Test
 
@@ -25,12 +19,8 @@ class NumbersViewModelTest : BaseTest() {
     private lateinit var manageResources: TestManageResources
     private lateinit var communications: TestNumbersCommunications
 
-    private val mainThreadSurrogate = newSingleThreadContext("UI thread")
-
     @Before
     fun init() {
-        Dispatchers.setMain(mainThreadSurrogate)
-
         dispatchers = TestDispatchers()
         interactor = TestNumbersInteractor()
         manageResources = TestManageResources()
@@ -38,12 +28,6 @@ class NumbersViewModelTest : BaseTest() {
 
         mapper = NumbersResultMapper(NumberUiMapper(), communications)
         viewModel = NumbersViewModel(dispatchers, interactor, manageResources, mapper, communications)
-    }
-
-    @After
-    fun tearDown() {
-        Dispatchers.resetMain() // reset the main dispatcher to the original Main dispatcher
-        mainThreadSurrogate.close()
     }
 
     /**
@@ -114,13 +98,13 @@ class NumbersViewModelTest : BaseTest() {
      */
     @Test
     fun `fact about some number`() = runBlocking {
-        interactor.changeExpectedResult(NumbersResult.Success(listOf(NumberFact("45", "random fact about 45"))))
+        interactor.changeExpectedResult(NumbersResult.Success(listOf(NumberFact("45", "fact about 45"))))
         viewModel.fetchNumberFact("45")
 
         assertEquals(true, communications.progressCalledList[0])
 
         assertEquals(1, interactor.fetchAboutNumberCalledList.size)
-        assertEquals(NumberFact("45", "fact about 45"), interactor.fetchAboutNumberCalledList[0])
+        assertEquals(NumbersResult.Success(listOf(NumberFact("45", "fact about 45"))), interactor.fetchAboutNumberCalledList[0])
 
         assertEquals(2, communications.progressCalledList.size)
         assertEquals(false, communications.progressCalledList[1])
