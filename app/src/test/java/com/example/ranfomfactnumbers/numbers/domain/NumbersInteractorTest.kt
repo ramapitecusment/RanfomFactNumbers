@@ -19,6 +19,7 @@ class NumbersInteractorTest {
     @Test
     fun test_init_success() = runBlocking {
         repository.changeExpectedList(listOf(NumberFact("6", "fact about 6")))
+
         val actual = interactor.init()
         val expected = NumbersResult.Success(listOf(NumberFact("6", "fact about 6")))
 
@@ -29,6 +30,7 @@ class NumbersInteractorTest {
     @Test
     fun test_fact_about_number_success() = runBlocking {
         repository.changeExpectedFactOfNumber(NumberFact("7", "expected 7"))
+
         val actual = interactor.factAboutNumber("7")
         val expected = NumbersResult.Success(listOf(NumberFact("7", "expected 7")))
 
@@ -39,13 +41,36 @@ class NumbersInteractorTest {
 
     @Test
     fun test_fact_about_number_error() = runBlocking {
-        repository.changeExpectedFactOfNumber(NumberFact("7", "expected 7"))
+        repository.expectingErrorGetFact(true)
+
         val actual = interactor.factAboutNumber("7")
-        val expected = NumbersResult.Success(listOf(NumberFact("7", "expected 7")))
+        val expected = NumbersResult.Failure("no internet connection")
 
         assertEquals(expected, actual)
         assertEquals("7", repository.numberFactCalledList[0])
         assertEquals(1, repository.numberFactCalledList.size)
+    }
+
+    @Test
+    fun test_fact_about_random_number_success() = runBlocking {
+        repository.changeExpectedFactOfRandomNumber(NumberFact("7", "expected 7"))
+
+        val actual = interactor.factAboutRandomNumber()
+        val expected = NumbersResult.Success(listOf(NumberFact("7", "expected 7")))
+
+        assertEquals(expected, actual)
+        assertEquals(1, repository.randomNumberFactCalledList.size)
+    }
+
+    @Test
+    fun test_fact_about_random_number_error() = runBlocking {
+        repository.expectingErrorGetRandomFact(true)
+
+        val actual = interactor.factAboutRandomNumber()
+        val expected = NumbersResult.Failure("no internet connection")
+
+        assertEquals(expected, actual)
+        assertEquals(1, repository.randomNumberFactCalledList.size)
     }
 
     private class TestNumbersRepository : NumbersRepository {
@@ -56,6 +81,7 @@ class NumbersInteractorTest {
 
         var allNumbersCalledCount = 0
         val numberFactCalledList = mutableListOf<String>()
+        val randomNumberFactCalledList = mutableListOf<String>()
 
         fun changeExpectedList(list: List<NumberFact>) {
             allNumbers.clear()
@@ -66,17 +92,31 @@ class NumbersInteractorTest {
             this.numberFact = numberFact
         }
 
+        fun changeExpectedFactOfRandomNumber(numberFact: NumberFact) {
+            this.numberFact = numberFact
+        }
+
         fun expectingErrorGetFact(error: Boolean) {
             errorWhileNumberFact = error
         }
 
-        override fun allNumbers(): List<NumberFact> {
+        fun expectingErrorGetRandomFact(error: Boolean) {
+            errorWhileNumberFact = error
+        }
+
+        override suspend fun allNumbers(): List<NumberFact> {
             allNumbersCalledCount++
             return allNumbers
         }
 
-        override fun numberFact(number: String): NumberFact {
+        override suspend fun numberFact(number: String): NumberFact {
             numberFactCalledList.add(number)
+            if (errorWhileNumberFact) throw NoInternetConnectionException()
+            return numberFact
+        }
+
+        override suspend fun randomNumberFact(): NumberFact {
+            randomNumberFactCalledList.add("7")
             if (errorWhileNumberFact) throw NoInternetConnectionException()
             return numberFact
         }
