@@ -1,5 +1,7 @@
 package com.example.ranfomfactnumbers.numbers.domain
 
+import com.example.ranfomfactnumbers.numbers.data.NumbersRepository
+
 interface NumbersInteractor {
 
     suspend fun init(): NumbersResult
