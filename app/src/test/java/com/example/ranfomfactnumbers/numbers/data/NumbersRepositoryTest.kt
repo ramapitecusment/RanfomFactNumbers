@@ -1,6 +1,7 @@
 package com.example.ranfomfactnumbers.numbers.data
 
 import com.example.ranfomfactnumbers.numbers.domain.NoInternetConnectionException
+import com.example.ranfomfactnumbers.numbers.domain.NumberFact
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
@@ -30,8 +31,8 @@ class NumbersRepositoryTest {
         )
 
         val expected = listOf(
-            NumberData("4", "fact of 4"),
-            NumberData("5", "fact of 5"),
+            NumberFact("4", "fact of 4"),
+            NumberFact("5", "fact of 5"),
         )
         val actual = repository.allNumbers()
 
@@ -87,7 +88,7 @@ class NumbersRepositoryTest {
         assertEquals(1, cacheDataSource.containsCalledList.size)
         assertEquals(0, cloudDataSource.numberFactCalledCount)
         assertEquals(1, cacheDataSource.numberFactCalledList.size)
-        assertEquals(0, cacheDataSource.saveNumberFactCalledCount)
+        assertEquals(1, cacheDataSource.saveNumberFactCalledCount)
     }
 
     @Test
@@ -140,7 +141,7 @@ class NumbersRepositoryTest {
         assertEquals(0, cloudDataSource.numberFactCalledCount)
         assertEquals(1, cloudDataSource.randomNumberFactCalledCount)
         assertEquals(0, cacheDataSource.numberFactCalledList.size)
-        assertEquals(0, cacheDataSource.saveNumberFactCalledCount)
+        assertEquals(1, cacheDataSource.saveNumberFactCalledCount)
     }
 
     private class TestNumbersCloudDataSource : NumbersCloudDataSource {
