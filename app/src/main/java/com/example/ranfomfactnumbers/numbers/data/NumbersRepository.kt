@@ -10,19 +10,29 @@ interface NumbersRepository {
 
     suspend fun randomNumberFact(): NumberFact
 
-    class Base(): NumbersRepository {
+    class Base(
+        private val handleRequest: HandleDataRequest,
+        private val cloudDataSource: NumberCloudDataSource,
+        private val cacheDataSource: NumberCacheDataSource,
+        private val mapperToDomain: NumberData.Mapper<NumberFact>,
+    ) : NumbersRepository {
+
         override suspend fun allNumbers(): List<NumberFact> {
-            TODO("Not yet implemented")
+            val data = cacheDataSource.allNumbers()
+            return data.map { it.map(mapperToDomain) }
         }
 
-        override suspend fun numberFact(number: String): NumberFact {
-            TODO("Not yet implemented")
+        override suspend fun numberFact(number: String) = handleRequest.handle {
+            val dataSource = if (cacheDataSource.contains(number)) cacheDataSource
+            else cloudDataSource
+            dataSource.number(number)
         }
 
-        override suspend fun randomNumberFact(): NumberFact {
-            TODO("Not yet implemented")
+        override suspend fun randomNumberFact(): NumberFact = handleRequest.handle {
+            cloudDataSource.randomNumber()
         }
 
     }
 
 }
+

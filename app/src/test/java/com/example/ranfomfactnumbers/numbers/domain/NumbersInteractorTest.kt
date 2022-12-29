@@ -9,7 +9,7 @@ import org.junit.Test
 
 class NumbersInteractorTest {
 
-    private lateinit var handleError: HandleError
+    private lateinit var handleError: HandleError<String>
     private lateinit var interactor: NumbersInteractor
     private lateinit var handleRequest: HandleRequest
     private lateinit var manageResources: TestManageReSources
