@@ -2,7 +2,7 @@ package com.example.ranfomfactnumbers.main
 
 import android.app.Application
 import com.example.ranfomfactnumbers.BuildConfig
-import com.example.ranfomfactnumbers.numbers.data.CloudModule
+import com.example.ranfomfactnumbers.numbers.data.cloud.CloudModule
 
 class App : Application() {
 

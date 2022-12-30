@@ -1,4 +1,7 @@
-package com.example.ranfomfactnumbers.numbers.data
+package com.example.ranfomfactnumbers.numbers.data.cloud
+
+import com.example.ranfomfactnumbers.numbers.data.cache.FetchNumber
+import com.example.ranfomfactnumbers.numbers.data.NumberData
 
 interface NumberCloudDataSource : FetchNumber {
 

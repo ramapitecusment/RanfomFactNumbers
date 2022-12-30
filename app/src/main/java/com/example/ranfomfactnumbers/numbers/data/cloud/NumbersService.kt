@@ -1,4 +1,4 @@
-package com.example.ranfomfactnumbers.numbers.data
+package com.example.ranfomfactnumbers.numbers.data.cloud
 
 import retrofit2.Response
 import retrofit2.http.GET

@@ -1,4 +1,6 @@
-package com.example.ranfomfactnumbers.numbers.data
+package com.example.ranfomfactnumbers.numbers.data.cache
+
+import com.example.ranfomfactnumbers.numbers.data.NumberData
 
 interface NumberCacheDataSource: FetchNumber {
 

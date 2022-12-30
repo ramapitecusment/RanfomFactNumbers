@@ -1,4 +1,4 @@
-package com.example.ranfomfactnumbers.numbers.data
+package com.example.ranfomfactnumbers.numbers.data.cloud
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

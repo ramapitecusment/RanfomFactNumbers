@@ -1,5 +1,7 @@
 package com.example.ranfomfactnumbers.numbers.data
 
+import com.example.ranfomfactnumbers.numbers.data.cache.NumberCacheDataSource
+import com.example.ranfomfactnumbers.numbers.data.cloud.NumberCloudDataSource
 import com.example.ranfomfactnumbers.numbers.domain.NoInternetConnectionException
 import com.example.ranfomfactnumbers.numbers.domain.NumberFact
 import junit.framework.TestCase.assertEquals
