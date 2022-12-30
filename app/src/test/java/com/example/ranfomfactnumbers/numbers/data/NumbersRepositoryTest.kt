@@ -192,7 +192,7 @@ class NumbersRepositoryTest {
         }
 
         override suspend fun contains(number: String): Boolean {
-            val result = data.find { it.matches(number) } != null
+            val result = data.find { it.map(NumberData.Mapper.Matches(number)) } != null
             containsCalledList.add(result)
             return result
         }
