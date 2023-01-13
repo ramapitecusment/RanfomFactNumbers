@@ -2,6 +2,7 @@ package com.example.ranfomfactnumbers.numbers.presentation
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -17,7 +18,7 @@ class NumbersFragment : Fragment(R.layout.fragment_numbers) {
     private val clickListener = object : ClickListener {
 
         override fun click(item: NumberUi) {
-
+            navigateToDetails()
         }
 
     }
@@ -28,18 +29,30 @@ class NumbersFragment : Fragment(R.layout.fragment_numbers) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         bindView()
+        observeViewModel()
         viewModel.init(savedInstanceState == null)
-        viewModel.observeState(this) {
-
-        }
-        viewModel.observeList(this, adapter::submitList)
-        viewModel.observeProgress(this) {
-
-        }
     }
 
     private fun bindView() {
-        binding.getFact.setOnClickListener { navigateToDetails() }
+        binding.getFact.setOnClickListener {
+            viewModel.fetchNumberFact(binding.editText.text.toString())
+        }
+        binding.getRandomFact.setOnClickListener {
+            viewModel.fetchRandomNumberFact()
+        }
+        binding.historyRecyclerView.adapter = adapter
+        binding.editText.addTextChangedListener(afterTextChanged = {
+            binding.inputEditText.isErrorEnabled = false
+            binding.inputEditText.error = ""
+        })
+    }
+
+    private fun observeViewModel() {
+        viewModel.observeState(this) {
+            it.apply(binding.inputEditText)
+        }
+        viewModel.observeList(this, adapter::submitList)
+        viewModel.observeProgress(this, binding.progress::setVisibility)
     }
 
     private fun navigateToDetails() {
