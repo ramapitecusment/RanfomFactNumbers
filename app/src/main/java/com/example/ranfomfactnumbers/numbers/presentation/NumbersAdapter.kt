@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
+import com.example.ranfomfactnumbers.databinding.ItemNumberBinding
 
 class NumbersAdapter(
     private val clickListener: ClickListener
@@ -23,7 +24,7 @@ class NumbersAdapter(
 }
 
 class NumberViewHolder(
-    private val binding: ViewBinding,
+    private val binding: ItemNumberBinding,
     private val clockListener: ClickListener,
 ) : RecyclerView.ViewHolder(binding.root) {
 
@@ -36,7 +37,6 @@ class NumberViewHolder(
 class NumberDiffUtil : DiffUtil.ItemCallback<NumberUi>() {
 
     override fun areItemsTheSame(oldItem: NumberUi, newItem: NumberUi) = oldItem == newItem
-
 
     // TODO compare by id
     override fun areContentsTheSame(oldItem: NumberUi, newItem: NumberUi) = oldItem == newItem
