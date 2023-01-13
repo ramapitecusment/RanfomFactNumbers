@@ -1,5 +1,6 @@
 package com.example.ranfomfactnumbers.numbers.presentation
 
+import android.view.View
 import com.example.ranfomfactnumbers.numbers.domain.NumbersResult
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -15,10 +16,10 @@ interface HandleNumbersRequest {
     ) : HandleNumbersRequest {
 
         override fun handle(coroutineScope: CoroutineScope, block: suspend () -> NumbersResult) {
-            communications.showProgress(true)
+            communications.showProgress(View.VISIBLE)
             coroutineScope.launch(dispatchers.io()) {
                 val result = block.invoke()
-                communications.showProgress(false)
+                communications.showProgress(View.GONE)
                 result.map(numbersResultMapper)
             }
         }

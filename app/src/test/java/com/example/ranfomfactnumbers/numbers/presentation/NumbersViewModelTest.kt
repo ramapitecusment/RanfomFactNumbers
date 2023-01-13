@@ -1,5 +1,6 @@
 package com.example.ranfomfactnumbers.numbers.presentation
 
+import android.view.View
 import com.example.ranfomfactnumbers.numbers.domain.NumberFact
 import com.example.ranfomfactnumbers.numbers.domain.NumbersInteractor
 import com.example.ranfomfactnumbers.numbers.domain.NumbersResult
@@ -45,9 +46,9 @@ class NumbersViewModelTest : BaseTest() {
         // 2. action
         viewModel.init(isFirstRun = true)
         // 3. check
-        assertEquals(true, communications.progressCalledList[0])
+        assertEquals(View.VISIBLE, communications.progressCalledList[0])
         assertEquals(2, communications.progressCalledList.size)
-        assertEquals(false, communications.progressCalledList[1])
+        assertEquals(View.GONE, communications.progressCalledList[1])
 
         assertEquals(1, communications.stateCalledList.size)
         assertEquals(UiState.Success, communications.stateCalledList[0])
@@ -59,12 +60,12 @@ class NumbersViewModelTest : BaseTest() {
         interactor.changeExpectedResult(NumbersResult.Failure("No internet connection"))
         viewModel.fetchRandomNumberFact()
 
-        assertEquals(true, communications.progressCalledList[2])
+        assertEquals(View.VISIBLE, communications.progressCalledList[2])
 
         assertEquals(1, interactor.fetchAboutRandomNumberCalledList.size)
 
         assertEquals(4, communications.progressCalledList.size)
-        assertEquals(false, communications.progressCalledList[3])
+        assertEquals(View.GONE, communications.progressCalledList[3])
 
         assertEquals(2, communications.stateCalledList.size)
         assertEquals(UiState.Error("No internet connection"), communications.stateCalledList[1])
@@ -104,13 +105,13 @@ class NumbersViewModelTest : BaseTest() {
         interactor.changeExpectedResult(NumbersResult.Success(listOf(NumberFact("45", "fact about 45"))))
         viewModel.fetchNumberFact("45")
 
-        assertEquals(true, communications.progressCalledList[0])
+        assertEquals(View.VISIBLE, communications.progressCalledList[0])
 
         assertEquals(1, interactor.fetchAboutNumberCalledList.size)
         assertEquals(NumbersResult.Success(listOf(NumberFact("45", "fact about 45"))), interactor.fetchAboutNumberCalledList[0])
 
         assertEquals(2, communications.progressCalledList.size)
-        assertEquals(false, communications.progressCalledList[1])
+        assertEquals(View.GONE, communications.progressCalledList[1])
 
         assertEquals(1, communications.stateCalledList.size)
         assertEquals(UiState.Success, communications.stateCalledList[0])

@@ -36,9 +36,8 @@ class NumberViewHolder(
 
 class NumberDiffUtil : DiffUtil.ItemCallback<NumberUi>() {
 
-    override fun areItemsTheSame(oldItem: NumberUi, newItem: NumberUi) = oldItem == newItem
+    override fun areItemsTheSame(oldItem: NumberUi, newItem: NumberUi) = oldItem.map(newItem)
 
-    // TODO compare by id
     override fun areContentsTheSame(oldItem: NumberUi, newItem: NumberUi) = oldItem == newItem
 
 }

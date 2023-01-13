@@ -14,7 +14,16 @@ class NumbersFragment : Fragment(R.layout.fragment_numbers) {
     private val binding: FragmentNumbersBinding by viewBinding(FragmentNumbersBinding::bind)
     private val viewModel: NumbersViewModel by viewModel()
 
-    private val adapter = NumbersAdapter()
+    private val clickListener = object : ClickListener {
+
+        override fun click(item: NumberUi) {
+
+        }
+
+    }
+
+    private val adapter = NumbersAdapter(clickListener)
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -23,7 +32,8 @@ class NumbersFragment : Fragment(R.layout.fragment_numbers) {
         viewModel.observeState(this) {
 
         }
-        viewModel.observeList(this) {
+        viewModel.observeList(this, adapter::submitList)
+        viewModel.observeProgress(this) {
 
         }
     }
