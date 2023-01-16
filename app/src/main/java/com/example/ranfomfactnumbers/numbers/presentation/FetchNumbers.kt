@@ -8,3 +8,9 @@ interface FetchNumbers {
 
     fun fetchNumberFact(number: String)
 }
+
+interface ClearError {
+
+    fun clearError()
+
+}

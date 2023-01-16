@@ -14,7 +14,7 @@ class NumbersViewModel(
     private val manageResources: ManageResources,
     private val communications: NumbersCommunications,
     private val handleNumbersRequest: HandleNumbersRequest,
-) : ViewModel(), ObserveNumbers, FetchNumbers {
+) : ViewModel(), ObserveNumbers, FetchNumbers, ClearError {
 
     override fun init(isFirstRun: Boolean) {
         if (isFirstRun) handleNumbersRequest.handle(viewModelScope) { interactor.init() }
@@ -41,6 +41,10 @@ class NumbersViewModel(
 
     override fun observeList(owner: LifecycleOwner, observer: Observer<List<NumberUi>>) {
         communications.observeList(owner, observer)
+    }
+
+    override fun clearError() {
+        communications.showState(UiState.ClearError)
     }
 
 }

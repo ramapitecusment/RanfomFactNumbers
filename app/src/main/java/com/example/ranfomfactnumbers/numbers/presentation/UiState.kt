@@ -12,11 +12,18 @@ sealed class UiState {
         }
     }
 
-    data class Error(private val message: String) : UiState() {
+    abstract class AbstractError(
+        private val message: String,
+        private val errorEnabled: Boolean
+    ) : UiState() {
         override fun apply(inputLayout: TextInputLayout) {
-            inputLayout.isErrorEnabled = true
+            inputLayout.isErrorEnabled = errorEnabled
             inputLayout.error = message
         }
     }
+
+    data class Error(private val message: String) : AbstractError(message, true)
+
+    object ClearError : AbstractError("", false)
 
 }

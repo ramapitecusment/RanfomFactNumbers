@@ -42,8 +42,7 @@ class NumbersFragment : Fragment(R.layout.fragment_numbers) {
         }
         binding.historyRecyclerView.adapter = adapter
         binding.editText.addTextChangedListener(afterTextChanged = {
-            binding.inputEditText.isErrorEnabled = false
-            binding.inputEditText.error = ""
+            viewModel.clearError()
         })
     }
 

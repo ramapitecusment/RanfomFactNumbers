@@ -120,6 +120,13 @@ class NumbersViewModelTest : BaseTest() {
         assertEquals(NumberUi("45", "fact about 45"), communications.numbersList[0])
     }
 
+    @Test
+    fun test_clear_error() {
+        viewModel.clearError()
+        assertEquals(1, communications.stateCalledList.size)
+        assertEquals(true, communications.stateCalledList[0] is UiState.ClearError)
+    }
+
     private class TestManageResources : ManageResources {
 
         var string = ""
