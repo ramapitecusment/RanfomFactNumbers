@@ -21,7 +21,7 @@ class NumbersFragment : Fragment(R.layout.fragment_numbers) {
     }
 
     private val adapter = NumbersAdapter(clickListener)
-    
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         bindView()
