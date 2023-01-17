@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.example.ranfomfactnumbers.numbers.data.cache.CacheModule
 import com.example.ranfomfactnumbers.numbers.data.cache.NumberCache
 import com.example.ranfomfactnumbers.numbers.data.cache.NumbersDao
 import com.example.ranfomfactnumbers.numbers.data.cache.NumbersDatabase
@@ -22,9 +23,7 @@ class RoomTest {
     @Before
     fun setup() {
         val context: Context = ApplicationProvider.getApplicationContext()
-        db = Room.inMemoryDatabaseBuilder(context, NumbersDatabase::class.java)
-            .allowMainThreadQueries()
-            .build()
+        db = CacheModule.Mock(context).provideDatabase()
         dao = db.numbersDao()
     }
 

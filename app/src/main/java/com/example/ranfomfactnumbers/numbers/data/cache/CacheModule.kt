@@ -7,7 +7,7 @@ interface CacheModule {
 
     fun provideDatabase(): NumbersDatabase
 
-    class Base(private val context: Context) : CacheModule {
+    class Base(context: Context) : CacheModule {
 
         private val database: NumbersDatabase by lazy {
             Room.databaseBuilder(context, NumbersDatabase::class.java, "numbers_database")
@@ -17,6 +17,17 @@ interface CacheModule {
 
         override fun provideDatabase() = database
 
+    }
+
+    class Mock(context: Context): CacheModule {
+
+        private val database: NumbersDatabase by lazy {
+            Room.inMemoryDatabaseBuilder(context, NumbersDatabase::class.java)
+                .allowMainThreadQueries()
+                .build()
+        }
+
+        override fun provideDatabase() = database
     }
 
 }

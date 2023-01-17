@@ -7,6 +7,8 @@ data class NumberUi(
     private val fact: String
 ) : Mapper<Boolean, NumberUi> {
 
+    fun ui() = "$id\n\n$fact"
+
     fun map(head: TextView, subTitle: TextView) {
         head.text = id
         subTitle.text = fact

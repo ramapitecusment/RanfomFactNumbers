@@ -34,7 +34,7 @@ interface CloudModule {
 
     class Debug : Abstract(BASE_URL_TEST, HttpLoggingInterceptor.Level.BODY)
 
-    class Release : Abstract(BASE_URL_RELEASE, HttpLoggingInterceptor.Level.NONE)
+    class Release : Abstract(BASE_URL_RELEASE, HttpLoggingInterceptor.Level.BODY)
 
 
     companion object {

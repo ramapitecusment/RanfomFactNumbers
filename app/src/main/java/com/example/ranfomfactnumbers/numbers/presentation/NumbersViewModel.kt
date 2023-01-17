@@ -6,8 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.ranfomfactnumbers.R
 import com.example.ranfomfactnumbers.numbers.domain.NumbersInteractor
-import com.example.ranfomfactnumbers.numbers.domain.NumbersResult
-import kotlinx.coroutines.launch
 
 class NumbersViewModel(
     private val interactor: NumbersInteractor,
