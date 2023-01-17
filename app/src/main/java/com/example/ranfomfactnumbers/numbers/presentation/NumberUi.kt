@@ -7,7 +7,11 @@ data class NumberUi(
     private val fact: String
 ) : Mapper<Boolean, NumberUi> {
 
-    fun ui() = "$id\n\n$fact"
+    fun <T> map(mapper: Mapper<T>): T = mapper.map(id, fact)
+
+    interface Mapper<T> {
+        fun map(id: String, fact: String): T
+    }
 
     fun map(head: TextView, subTitle: TextView) {
         head.text = id
@@ -15,5 +19,23 @@ data class NumberUi(
     }
 
     override fun map(source: NumberUi) = source.id == id
+
+}
+
+object DetailsUI: NumberUi.Mapper<String> {
+
+    override fun map(id: String, fact: String) = "$id\n\n$fact"
+
+}
+
+class ListItemUI(
+    private val head: TextView,
+    private val subtitle: TextView
+) : NumberUi.Mapper<Unit> {
+
+    override fun map(id: String, fact: String) {
+        head.text = id
+        subtitle.text = fact
+    }
 
 }

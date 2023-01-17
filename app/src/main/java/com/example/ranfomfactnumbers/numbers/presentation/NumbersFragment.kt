@@ -44,7 +44,7 @@ class NumbersFragment : Fragment(R.layout.fragment_numbers) {
     }
 
     private fun navigateToDetails(item: NumberUi) {
-        val action = NumbersFragmentDirections.toDetailsFragment(item.ui())
+        val action = NumbersFragmentDirections.toDetailsFragment(item.map(DetailsUI))
         findNavController().navigate(action)
     }
 

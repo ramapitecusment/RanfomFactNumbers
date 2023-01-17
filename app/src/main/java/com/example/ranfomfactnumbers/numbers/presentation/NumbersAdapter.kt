@@ -28,8 +28,10 @@ class NumberViewHolder(
     private val clockListener: ClickListener,
 ) : RecyclerView.ViewHolder(binding.root) {
 
+    private val mapper = ListItemUI(binding.title, binding.subtitle)
+
     fun bind(model: NumberUi) {
-        model.map(binding.title, binding.subtitle)
+        model.map(mapper)
         binding.root.setOnClickListener { clockListener.click(model) }
     }
 }
