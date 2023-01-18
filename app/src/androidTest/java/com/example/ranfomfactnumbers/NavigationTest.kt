@@ -1,6 +1,7 @@
 package com.example.ranfomfactnumbers
 
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.Espresso.pressBack
 import androidx.test.espresso.ViewAssertion
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.typeText
@@ -33,7 +34,12 @@ class NavigationTest {
         // navigate to Details
         onView(withId(R.id.subtitle)).perform(click())
 
+        // check
         onView(withId(R.id.details)).check(matches(withText("10\n\nfact about 10")))
+
+        pressBack()
+        onView(withId(R.id.title)).check(matches(withText("10")))
+        onView(withId(R.id.subtitle)).check(matches(withText("fact about 10")))
     }
 
 }
