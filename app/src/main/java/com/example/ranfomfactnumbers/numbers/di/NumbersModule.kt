@@ -29,7 +29,6 @@ val numbersModule = module {
             communications,
             HandleNumbersRequest.Base(get(), communications, NumbersResultMapper(get(), communications))
         )
-
     }
 
     factory<ProgressCommunication> { ProgressCommunication.Base() }
@@ -39,6 +38,7 @@ val numbersModule = module {
     factory<NumberFact.Mapper<NumberUi>> { NumberUiMapper() }
 
     factory<NumbersInteractor> { NumbersInteractor.Base(get(), get()) }
+    // TODO Check how to inject HandleError.Base
     factory<HandleRequest> { HandleRequest.Base(HandleError.Base(get()), get()) }
 
     factory<NumbersRepository> { NumbersRepository.Base(get(), get(), get(), get()) }
@@ -49,6 +49,7 @@ val numbersModule = module {
 
     single { get<CloudModule>().service(NumbersService::class.java) }
 
+    // TODO Check how to inject NumberDataToCache
     factory<NumberCacheDataSource> { NumberCacheDataSource.Base(get(), NumberDataToCache()) }
     single { get<CacheModule>().provideDatabase().numbersDao() }
 
