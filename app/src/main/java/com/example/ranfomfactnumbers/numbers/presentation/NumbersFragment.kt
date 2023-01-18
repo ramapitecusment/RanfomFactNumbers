@@ -33,8 +33,8 @@ class NumbersFragment : Fragment(R.layout.fragment_numbers) {
         binding.getFact.setOnClickListener {
             viewModel.fetchNumberFact(binding.editText.text.toString())
         }
-        binding.getRandomFact.setOnClickListener { viewModel.fetchRandomNumberFact() }
         binding.editText.doAfterTextChanged { viewModel.clearError() }
+        binding.getRandomFact.setOnClickListener { viewModel.fetchRandomNumberFact() }
     }
 
     private fun observeViewModel() {
