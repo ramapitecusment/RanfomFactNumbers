@@ -40,7 +40,7 @@ interface CloudModule {
 
     class Debug : Abstract(BASE_URL_TEST, HttpLoggingInterceptor.Level.BODY)
 
-    class Release : Abstract(BASE_URL_RELEASE, HttpLoggingInterceptor.Level.BASIC)
+    class Release : Abstract(BASE_URL_RELEASE, HttpLoggingInterceptor.Level.NONE)
 
     companion object {
         private const val BASE_URL_RELEASE = "http://numbersapi.com/"

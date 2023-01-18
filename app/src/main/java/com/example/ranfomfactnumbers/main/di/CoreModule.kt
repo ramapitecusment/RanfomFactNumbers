@@ -11,27 +11,22 @@ import org.koin.dsl.module
 val coreModule = module {
 
     when (BuildConfig.BUILD_TYPE) {
-        "debug" -> {
-            single<CloudModule> { CloudModule.Debug() }
-            single<DispatchersList> { DispatchersList.Base() }
-            single<ManageResources> { ManageResources.Base(androidContext()) }
-            single<CacheModule> { CacheModule.Base(androidContext()) }
-        }
-
         "staging" -> {
             single<CloudModule> { CloudModule.Mock() }
-            single<DispatchersList> { DispatchersList.Base() }
-            single<ManageResources> { ManageResources.Base(androidContext()) }
             single<CacheModule> { CacheModule.Mock(androidContext()) }
         }
-
+        "debug" -> {
+            single<CloudModule> { CloudModule.Debug() }
+            single<CacheModule> { CacheModule.Base(androidContext()) }
+        }
         "release" -> {
             single<CloudModule> { CloudModule.Release() }
-            single<DispatchersList> { DispatchersList.Base() }
-            single<ManageResources> { ManageResources.Base(androidContext()) }
             single<CacheModule> { CacheModule.Base(androidContext()) }
         }
     }
+
+    single<DispatchersList> { DispatchersList.Base() }
+    single<ManageResources> { ManageResources.Base(androidContext()) }
 
 
 }
