@@ -32,10 +32,15 @@ interface CloudModule {
 
     }
 
+    class Mock: CloudModule {
+
+        override fun <T> service(clasz: Class<T>) = MockNumbersService() as T
+
+    }
+
     class Debug : Abstract(BASE_URL_TEST, HttpLoggingInterceptor.Level.BODY)
 
-    class Release : Abstract(BASE_URL_RELEASE, HttpLoggingInterceptor.Level.BODY)
-
+    class Release : Abstract(BASE_URL_RELEASE, HttpLoggingInterceptor.Level.BASIC)
 
     companion object {
         private const val BASE_URL_RELEASE = "http://numbersapi.com/"

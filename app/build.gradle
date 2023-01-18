@@ -9,6 +9,8 @@ android {
     namespace 'com.example.ranfomfactnumbers'
     compileSdk 32
 
+    testBuildType "staging"
+
     defaultConfig {
         applicationId "com.example.ranfomfactnumbers"
         minSdk 21
@@ -23,6 +25,9 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        staging {
+            initWith debug
         }
     }
     compileOptions {

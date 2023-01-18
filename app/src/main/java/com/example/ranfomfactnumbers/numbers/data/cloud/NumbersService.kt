@@ -7,7 +7,7 @@ import retrofit2.http.Path
 interface NumbersService {
 
     @GET("{id}")
-    suspend fun fact(@Path("id") id: String): Response<String>
+    suspend fun fact(@Path("id") id: String): String
 
     @GET("random/math")
     suspend fun random(): Response<String>

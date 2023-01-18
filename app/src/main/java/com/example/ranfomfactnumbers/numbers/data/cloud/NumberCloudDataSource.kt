@@ -12,7 +12,7 @@ interface NumberCloudDataSource : FetchNumber {
     ) : NumberCloudDataSource {
 
         override suspend fun number(number: String): NumberData {
-            val body = service.fact(number).body() ?: throw IllegalStateException("Service is unavailable")
+            val body = service.fact(number)
             return NumberData(number, body)
         }
 

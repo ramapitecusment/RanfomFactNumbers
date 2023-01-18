@@ -10,26 +10,28 @@ import org.koin.dsl.module
 
 val coreModule = module {
 
-//    val module = /*if (BuildConfig.DEBUG) codeModuleDebug else*/ codeModuleRelease
-//    includes(module)
+    when (BuildConfig.BUILD_TYPE) {
+        "debug" -> {
+            single<CloudModule> { CloudModule.Debug() }
+            single<DispatchersList> { DispatchersList.Base() }
+            single<ManageResources> { ManageResources.Base(androidContext()) }
+            single<CacheModule> { CacheModule.Base(androidContext()) }
+        }
 
-    single<CloudModule> { CloudModule.Release() }
-    single<DispatchersList> { DispatchersList.Base() }
-    single<ManageResources> { ManageResources.Base(androidContext()) }
-    single<CacheModule> { CacheModule.Base(androidContext()) }
+        "staging" -> {
+            single<CloudModule> { CloudModule.Mock() }
+            single<DispatchersList> { DispatchersList.Base() }
+            single<ManageResources> { ManageResources.Base(androidContext()) }
+            single<CacheModule> { CacheModule.Mock(androidContext()) }
+        }
 
-}
+        "release" -> {
+            single<CloudModule> { CloudModule.Release() }
+            single<DispatchersList> { DispatchersList.Base() }
+            single<ManageResources> { ManageResources.Base(androidContext()) }
+            single<CacheModule> { CacheModule.Base(androidContext()) }
+        }
+    }
 
-private val codeModuleRelease = module {
-    single<CloudModule> { CloudModule.Release() }
-    single<DispatchersList> { DispatchersList.Base() }
-    single<ManageResources> { ManageResources.Base(androidContext()) }
-    single<CacheModule> { CacheModule.Base(androidContext()) }
-}
 
-private val codeModuleDebug = module {
-    single { CloudModule.Debug() }
-    single { DispatchersList.Base() }
-    single { ManageResources.Base(androidContext()) }
-    single { CacheModule.Mock(androidContext()) }
 }
