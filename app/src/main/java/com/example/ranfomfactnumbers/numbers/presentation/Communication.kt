@@ -4,6 +4,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 
+// TODO change to StateFlow/SharedFlow
 interface Communication {
 
     interface Observe<T> {
@@ -43,4 +44,8 @@ interface Communication {
         override fun map(source: T) = liveData.postValue(source!!)
 
     }
+
+    abstract class SingleUi<T> : Ui<T>(MutableLiveData())
+
+    abstract class SinglePost<T> : Post<T>(MutableLiveData())
 }
