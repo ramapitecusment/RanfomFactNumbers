@@ -1,7 +1,6 @@
 package com.example.ranfomfactnumbers
 
-import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.Espresso.pressBack
+import androidx.test.espresso.Espresso.*
 import androidx.test.espresso.ViewAssertion
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.typeText
@@ -25,6 +24,7 @@ class NavigationTest {
     fun test_details_navigation() {
         // actions
         onView(withId(R.id.editText)).perform(typeText("10"))
+        closeSoftKeyboard()
         onView(withId(R.id.getFact)).perform(click())
 
         // check
