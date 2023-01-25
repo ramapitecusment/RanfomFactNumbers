@@ -35,5 +35,4 @@ abstract class BaseTest {
     protected fun Int.clickRecyclerItem(position: Int, viewId: Int) =
         viewInRecycler(position, viewId).click()
 
-
 }

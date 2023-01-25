@@ -1,12 +1,7 @@
 package com.example.ranfomfactnumbers
 
-class DetailsPage : Page() {
+class DetailsPage : Page {
 
     val details = R.id.details
-
-    override fun isVisibleNow() {
-
-    }
-
 
 }
