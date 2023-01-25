@@ -15,31 +15,32 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class NavigationTest {
+class NavigationTest : BaseTest() {
 
     @get:Rule
     var activityScenarioRule = ActivityScenarioRule(MainActivity::class.java)
 
     @Test
     fun test_details_navigation() {
-        // actions
-        onView(withId(R.id.editText)).perform(typeText("10"))
-        closeSoftKeyboard()
-        onView(withId(R.id.getFact)).perform(click())
+        val numbersPage = NumbersPage()
+        val detailsPage = DetailsPage()
+        numbersPage.run {
+            input.typeText("10")
+            getFactButton.click()
+            recycler.checkRecyclerText(0, title, "10")
+            recycler.checkRecyclerText(0, subtitle, "fact about 10")
+            recycler.clickRecyclerItem(0, subtitle)
+        }
 
-        // check
-        onView(withId(R.id.title)).check(matches(withText("10")))
-        onView(withId(R.id.subtitle)).check(matches(withText("fact about 10")))
-
-        // navigate to Details
-        onView(withId(R.id.subtitle)).perform(click())
-
-        // check
-        onView(withId(R.id.details)).check(matches(withText("10\n\nfact about 10")))
-
+        detailsPage.run {
+            details.checkText("10\n\nfact about 10")
+        }
         pressBack()
-        onView(withId(R.id.title)).check(matches(withText("10")))
-        onView(withId(R.id.subtitle)).check(matches(withText("fact about 10")))
+
+        numbersPage.run {
+            recycler.checkRecyclerText(0, title, "10")
+            recycler.checkRecyclerText(0, subtitle, "fact about 10")
+        }
     }
 
 }
