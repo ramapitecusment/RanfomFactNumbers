@@ -8,7 +8,8 @@ interface NumberCloudDataSource : FetchNumber {
     suspend fun randomNumber(): NumberData
 
     class Base(
-        private val service: NumbersService
+        private val service: NumbersService,
+        private val randomHeaders: RandomApiHeader
     ) : NumberCloudDataSource {
 
         override suspend fun number(number: String): NumberData {
@@ -20,17 +21,13 @@ interface NumberCloudDataSource : FetchNumber {
             val response = service.random()
             val body = response.body() ?: throw IllegalStateException("Service is unavailable")
             val headers = response.headers()
-            headers.find { (key, _) -> RANDOM_API_HEADER == key }?.let { (_, value) ->
+            randomHeaders.findInHeader(headers)?.let { (_, value) ->
                 return NumberData(value, body)
             }
 
             throw IllegalStateException("Service is unavailable")
         }
 
-    }
-
-    companion object {
-        private const val RANDOM_API_HEADER = "X-Numbers-API-Number"
     }
 
 }

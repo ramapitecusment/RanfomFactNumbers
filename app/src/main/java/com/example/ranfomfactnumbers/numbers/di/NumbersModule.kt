@@ -1,5 +1,8 @@
 package com.example.ranfomfactnumbers.numbers.di
 
+import com.example.ranfomfactnumbers.BuildConfig
+import com.example.ranfomfactnumbers.BuildType
+import com.example.ranfomfactnumbers.main.di.ProvideCoreInstances
 import com.example.ranfomfactnumbers.numbers.data.*
 import com.example.ranfomfactnumbers.numbers.data.cache.CacheModule
 import com.example.ranfomfactnumbers.numbers.data.cache.NumberCache
@@ -8,15 +11,26 @@ import com.example.ranfomfactnumbers.numbers.data.cache.NumberDataToCache
 import com.example.ranfomfactnumbers.numbers.data.cloud.CloudModule
 import com.example.ranfomfactnumbers.numbers.data.cloud.NumberCloudDataSource
 import com.example.ranfomfactnumbers.numbers.data.cloud.NumbersService
+import com.example.ranfomfactnumbers.numbers.data.cloud.RandomApiHeader
 import com.example.ranfomfactnumbers.numbers.domain.HandleError
 import com.example.ranfomfactnumbers.numbers.domain.HandleRequest
 import com.example.ranfomfactnumbers.numbers.domain.NumberFact
 import com.example.ranfomfactnumbers.numbers.domain.NumbersInteractor
 import com.example.ranfomfactnumbers.numbers.presentation.*
+import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val numbersModule = module {
+
+    single {
+        when (BuildConfig.BUILD_TYPE) {
+            BuildType.MOCK -> ProvideNumbersInstances.Mock(get())
+            BuildType.DEBUG -> ProvideNumbersInstances.Debug(get())
+            BuildType.RELEASE -> ProvideNumbersInstances.Release(get())
+            else -> throw IllegalStateException("No such build type: ${BuildConfig.BUILD_TYPE}")
+        }
+    }
 
     viewModel {
         val communications = NumbersCommunications.Base(get(), get(), get())
@@ -39,9 +53,9 @@ val numbersModule = module {
     factory<HandleDataRequest> { HandleDataRequest.Base(get<HandleDomainError>(), get(), get()) }
     factory { HandleDomainError() }
 
-    factory<NumberCloudDataSource> { NumberCloudDataSource.Base(get()) }
+    factory<NumberCloudDataSource> { NumberCloudDataSource.Base(get(), get<ProvideNumbersInstances>().provideRandomApiHeader()) }
 
-    single { get<CloudModule>().service(NumbersService::class.java) }
+    single { get<ProvideNumbersInstances>().provideNumbersService() }
 
     factory<NumberCacheDataSource> { NumberCacheDataSource.Base(get(), NumberDataToCache()) }
     single { get<CacheModule>().provideDatabase().numbersDao() }

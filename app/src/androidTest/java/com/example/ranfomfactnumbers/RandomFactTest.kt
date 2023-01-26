@@ -7,7 +7,6 @@ class RandomFactTest : BaseTest() {
     @Test
     fun test() {
         val numbersPage = NumbersPage()
-        val detailsPage = DetailsPage()
         numbersPage.run {
             getRandomFactButton.click()
             recycler.checkRecyclerText(0, title, "1")

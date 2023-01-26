@@ -32,9 +32,9 @@ interface CloudModule {
 
     }
 
-    class Mock: CloudModule {
+    class Mock(private val randomApiHeader: RandomApiHeader.MockResponse) : CloudModule {
 
-        override fun <T> service(clasz: Class<T>) = MockNumbersService() as T
+        override fun <T> service(clasz: Class<T>) = MockNumbersService(randomApiHeader) as T
 
     }
 

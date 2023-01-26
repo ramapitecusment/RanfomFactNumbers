@@ -9,7 +9,7 @@ android {
     namespace 'com.example.ranfomfactnumbers'
     compileSdk 32
 
-    testBuildType "staging"
+    testBuildType "mock"
 
     defaultConfig {
         applicationId "com.example.ranfomfactnumbers"
@@ -26,7 +26,7 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
-        staging {
+        mock {
             initWith debug
         }
     }
