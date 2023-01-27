@@ -26,7 +26,7 @@ interface RandomApiHeader {
     }
 
     class Base: Abstract(RANDOM_API_HEADER)
-    class Mock: Abstract(RANDOM_API_HEADER_MOCK)
+    class Mock(value: String = RANDOM_API_HEADER_MOCK) : Abstract(value)
 
     companion object {
         private const val RANDOM_API_HEADER = "X-Numbers-API-Number"

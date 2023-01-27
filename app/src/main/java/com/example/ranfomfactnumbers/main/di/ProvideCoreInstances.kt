@@ -29,7 +29,7 @@ interface ProvideCoreInstances {
 
     class Mock(private val context: Context) : ProvideCoreInstances {
 
-        override fun provideCloudModule() = CloudModule.Mock(RandomApiHeader.Mock())
+        override fun provideCloudModule() = CloudModule.Mock(RandomApiHeader.Mock("test"))
 
         override fun provideCacheModule() = CacheModule.Mock(context)
 

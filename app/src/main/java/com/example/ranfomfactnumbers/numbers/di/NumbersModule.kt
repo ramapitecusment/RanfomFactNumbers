@@ -47,7 +47,9 @@ val numbersModule = module {
     factory<HandleDataRequest> { HandleDataRequest.Base(get<HandleDomainError>(), get(), get()) }
     factory { HandleDomainError() }
 
-    factory<NumberCloudDataSource> { NumberCloudDataSource.Base(get(), get<ProvideNumbersInstances>().provideRandomApiHeader()) }
+    factory { get<ProvideNumbersInstances>().provideRandomApiHeader() }
+
+    factory<NumberCloudDataSource> { NumberCloudDataSource.Base(get(), get()) }
 
     single { get<ProvideNumbersInstances>().provideNumbersService() }
 

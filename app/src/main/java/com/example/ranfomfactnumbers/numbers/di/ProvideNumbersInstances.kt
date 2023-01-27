@@ -31,7 +31,7 @@ interface ProvideNumbersInstances {
 
         override fun provideNumbersService() = cloudModule.service(MockNumbersService::class.java)
 
-        override fun provideRandomApiHeader() = RandomApiHeader.Mock()
+        override fun provideRandomApiHeader() = RandomApiHeader.Mock("test")
 
     }
 
