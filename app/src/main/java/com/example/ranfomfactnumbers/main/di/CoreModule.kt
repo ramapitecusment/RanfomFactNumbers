@@ -6,6 +6,7 @@ import com.example.ranfomfactnumbers.BuildType.RELEASE
 import com.example.ranfomfactnumbers.BuildType.MOCK
 import com.example.ranfomfactnumbers.numbers.presentation.DispatchersList
 import com.example.ranfomfactnumbers.numbers.presentation.ManageResources
+import com.example.ranfomfactnumbers.peridicworker.WorkManagerWrapper
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
@@ -25,5 +26,7 @@ val coreModule = module {
 
     single<DispatchersList> { DispatchersList.Base() }
     single<ManageResources> { ManageResources.Base(androidContext()) }
+
+    single<WorkManagerWrapper> { WorkManagerWrapper.Base(androidContext()) }
 
 }

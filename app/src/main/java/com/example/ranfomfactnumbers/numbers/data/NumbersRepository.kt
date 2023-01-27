@@ -4,13 +4,11 @@ import com.example.ranfomfactnumbers.numbers.data.cache.NumberCacheDataSource
 import com.example.ranfomfactnumbers.numbers.data.cloud.NumberCloudDataSource
 import com.example.ranfomfactnumbers.numbers.domain.NumberFact
 
-interface NumbersRepository {
+interface NumbersRepository : RandomNumberRepository {
 
     suspend fun allNumbers(): List<NumberFact>
 
     suspend fun numberFact(number: String): NumberFact
-
-    suspend fun randomNumberFact(): NumberFact
 
     class Base(
         private val handleRequest: HandleDataRequest,
@@ -35,6 +33,13 @@ interface NumbersRepository {
         }
 
     }
+
+}
+
+
+interface RandomNumberRepository {
+
+    suspend fun randomNumberFact(): NumberFact
 
 }
 
