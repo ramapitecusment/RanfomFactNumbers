@@ -1,7 +1,6 @@
 package com.example.ranfomfactnumbers.numbers.presentation
 
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.ranfomfactnumbers.R
@@ -29,16 +28,16 @@ class NumbersViewModel(
             handleNumbersRequest.handle(viewModelScope) { interactor.factAboutNumber(number) }
     }
 
-    override fun observeProgress(owner: LifecycleOwner, observer: Observer<Int>) {
-        communications.observeProgress(owner, observer)
+    override fun observeProgress(owner: LifecycleOwner, action: (value: Int) -> Unit) {
+        communications.observeProgress(owner, action)
     }
 
-    override fun observeState(owner: LifecycleOwner, observer: Observer<UiState>) {
-        communications.observeState(owner, observer)
+    override fun observeState(owner: LifecycleOwner, action: (value: UiState) -> Unit) {
+        communications.observeState(owner, action)
     }
 
-    override fun observeList(owner: LifecycleOwner, observer: Observer<List<NumberUi>>) {
-        communications.observeList(owner, observer)
+    override fun observeList(owner: LifecycleOwner, action: (List<NumberUi>) -> Unit) {
+        communications.observeList(owner, action)
     }
 
     override fun clearError() {

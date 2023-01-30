@@ -1,7 +1,7 @@
 package com.example.ranfomfactnumbers.numbers.presentation
 
+import android.view.View
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.Observer
 
 interface NumbersCommunications : ObserveNumbers {
 
@@ -23,16 +23,16 @@ interface NumbersCommunications : ObserveNumbers {
 
         override fun showList(list: List<NumberUi>) = numbersList.map(list)
 
-        override fun observeProgress(owner: LifecycleOwner, observer: Observer<Int>) {
-            progress.observe(owner, observer)
+        override fun observeProgress(owner: LifecycleOwner, action: (Int) -> Unit) {
+            progress.observe(owner, action)
         }
 
-        override fun observeState(owner: LifecycleOwner, observer: Observer<UiState>) {
-            state.observe(owner, observer)
+        override fun observeState(owner: LifecycleOwner, action: (UiState) -> Unit) {
+            state.observe(owner, action)
         }
 
-        override fun observeList(owner: LifecycleOwner, observer: Observer<List<NumberUi>>) {
-            numbersList.observe(owner, observer)
+        override fun observeList(owner: LifecycleOwner, action: (List<NumberUi>) -> Unit) {
+            numbersList.observe(owner, action)
         }
 
     }
@@ -41,22 +41,22 @@ interface NumbersCommunications : ObserveNumbers {
 
 interface ObserveNumbers {
 
-    fun observeProgress(owner: LifecycleOwner, observer: Observer<Int>)
+    fun observeProgress(owner: LifecycleOwner, action: (Int) -> Unit)
 
-    fun observeState(owner: LifecycleOwner, observer: Observer<UiState>)
+    fun observeState(owner: LifecycleOwner, action: (UiState) -> Unit)
 
-    fun observeList(owner: LifecycleOwner, observer: Observer<List<NumberUi>>)
+    fun observeList(owner: LifecycleOwner, action: (List<NumberUi>) -> Unit)
 
 }
 
 interface ProgressCommunication : Communication.Mutable<Int> {
-    class Base : Communication.Post<Int>(), ProgressCommunication
+    class Base : Communication.Post<Int>(View.GONE), ProgressCommunication
 }
 
 interface NumberStateCommunication : Communication.Mutable<UiState> {
-    class Base : Communication.Post<UiState>(), NumberStateCommunication
+    class Base : Communication.Post<UiState>(UiState.Success), NumberStateCommunication
 }
 
 interface NumbersListCommunication : Communication.Mutable<List<NumberUi>> {
-    class Base : Communication.Post<List<NumberUi>>(), NumbersListCommunication
+    class Base : Communication.Post<List<NumberUi>>(emptyList()), NumbersListCommunication
 }

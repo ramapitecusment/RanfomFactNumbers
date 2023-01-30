@@ -1,15 +1,17 @@
 package com.example.ranfomfactnumbers.numbers.presentation
 
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 // TODO change to StateFlow/SharedFlow
 interface Communication {
 
     interface Observe<T> {
 
-        fun observe(owner: LifecycleOwner, observer: Observer<T>)
+        fun observe(owner: LifecycleOwner, action: (T) -> Unit)
 
     }
 
@@ -18,34 +20,25 @@ interface Communication {
     interface Mutable<T> : Observe<T>, Mutate<T>
 
     abstract class Abstract<T>(
-        protected val liveData: MutableLiveData<T> = MutableLiveData()
+        protected val state: MutableStateFlow<T>
     ) : Mutable<T> {
 
-        override fun observe(owner: LifecycleOwner, observer: Observer<T>) {
-            liveData.observe(owner, observer)
-        }
-
-    }
-
-    abstract class Ui<T>(
-        liveData: MutableLiveData<T> = MutableLiveData()
-    ) : Abstract<T>(liveData) {
-
-        override fun map(source: T) {
-            liveData.value = source!!
+        override fun observe(owner: LifecycleOwner, action: (T) -> Unit) {
+            owner.lifecycleScope.launchWhenResumed {
+                state.onEach(action::invoke).launchIn(owner.lifecycleScope)
+            }
         }
 
     }
 
     abstract class Post<T>(
-        liveData: MutableLiveData<T> = MutableLiveData()
-    ) : Abstract<T>(liveData) {
+        initialValue: T
+    ) : Abstract<T>(MutableStateFlow(initialValue)) {
 
-        override fun map(source: T) = liveData.postValue(source!!)
+        override fun map(source: T) {
+            state.value = source
+        }
 
     }
 
-    abstract class SingleUi<T> : Ui<T>(MutableLiveData())
-
-    abstract class SinglePost<T> : Post<T>(MutableLiveData())
 }
