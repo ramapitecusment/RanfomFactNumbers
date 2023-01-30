@@ -36,10 +36,3 @@ interface NumbersRepository : RandomNumberRepository {
 
 }
 
-
-interface RandomNumberRepository {
-
-    suspend fun randomNumberFact(): NumberFact
-
-}
-

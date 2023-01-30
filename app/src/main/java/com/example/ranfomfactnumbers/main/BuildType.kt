@@ -1,4 +1,4 @@
-package com.example.ranfomfactnumbers
+package com.example.ranfomfactnumbers.main
 
 object BuildType {
 

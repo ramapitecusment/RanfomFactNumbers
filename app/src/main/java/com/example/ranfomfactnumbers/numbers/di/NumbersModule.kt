@@ -1,7 +1,7 @@
 package com.example.ranfomfactnumbers.numbers.di
 
 import com.example.ranfomfactnumbers.BuildConfig
-import com.example.ranfomfactnumbers.BuildType
+import com.example.ranfomfactnumbers.main.BuildType
 import com.example.ranfomfactnumbers.numbers.data.*
 import com.example.ranfomfactnumbers.numbers.data.cache.CacheModule
 import com.example.ranfomfactnumbers.numbers.data.cache.NumberCacheDataSource

@@ -1,9 +1,9 @@
 package com.example.ranfomfactnumbers.main.di
 
 import com.example.ranfomfactnumbers.BuildConfig
-import com.example.ranfomfactnumbers.BuildType.DEBUG
-import com.example.ranfomfactnumbers.BuildType.RELEASE
-import com.example.ranfomfactnumbers.BuildType.MOCK
+import com.example.ranfomfactnumbers.main.BuildType.DEBUG
+import com.example.ranfomfactnumbers.main.BuildType.RELEASE
+import com.example.ranfomfactnumbers.main.BuildType.MOCK
 import com.example.ranfomfactnumbers.numbers.presentation.DispatchersList
 import com.example.ranfomfactnumbers.numbers.presentation.ManageResources
 import com.example.ranfomfactnumbers.peridicworker.WorkManagerWrapper
