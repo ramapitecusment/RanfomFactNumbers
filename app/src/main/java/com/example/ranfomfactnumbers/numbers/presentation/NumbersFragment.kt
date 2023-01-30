@@ -38,7 +38,11 @@ class NumbersFragment : Fragment(R.layout.fragment_numbers) {
     }
 
     private fun observeViewModel() {
-        viewModel.observeList(this, adapter::submitList)
+        viewModel.observeList(this) {
+            adapter.submitList(it) {
+                binding.historyRecyclerView.scrollToPosition(0)
+            }
+        }
         viewModel.observeState(this) { it.apply(binding.inputEditText) }
         viewModel.observeProgress(this, binding.progress::setVisibility)
     }
