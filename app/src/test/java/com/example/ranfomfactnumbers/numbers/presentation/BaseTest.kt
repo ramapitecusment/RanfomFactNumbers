@@ -25,11 +25,11 @@ abstract class BaseTest {
             numbersList.addAll(list)
         }
 
-        override fun observeProgress(owner: LifecycleOwner, observer: Observer<Int>) = Unit
+        override fun observeProgress(owner: LifecycleOwner, action: (Int) -> Unit) = Unit
 
-        override fun observeState(owner: LifecycleOwner, observer: Observer<UiState>) = Unit
+        override fun observeState(owner: LifecycleOwner, action: (UiState) -> Unit) = Unit
 
-        override fun observeList(owner: LifecycleOwner, observer: Observer<List<NumberUi>>) = Unit
+        override fun observeList(owner: LifecycleOwner, action: (List<NumberUi>) -> Unit) = Unit
     }
 
 }
