@@ -6,7 +6,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
-// TODO change to StateFlow/SharedFlow
 interface Communication {
 
     interface Observe<T> {
@@ -31,9 +30,7 @@ interface Communication {
 
     }
 
-    abstract class Post<T>(
-        initialValue: T
-    ) : Abstract<T>(MutableStateFlow(initialValue)) {
+    abstract class Post<T>(initialValue: T) : Abstract<T>(MutableStateFlow(initialValue)) {
 
         override fun map(source: T) {
             state.value = source

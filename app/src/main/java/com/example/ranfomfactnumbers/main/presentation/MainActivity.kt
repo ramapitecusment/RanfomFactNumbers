@@ -5,13 +5,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupActionBarWithNavController
-import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.ranfomfactnumbers.R
-import com.example.ranfomfactnumbers.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
-    private val binding: ActivityMainBinding by viewBinding(ActivityMainBinding::bind)
     private var navController: NavController? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {

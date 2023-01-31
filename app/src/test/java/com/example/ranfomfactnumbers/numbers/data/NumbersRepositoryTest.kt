@@ -68,12 +68,12 @@ class NumbersRepositoryTest {
     }
 
     @Test
-    fun test_number_fact_not_cached_failure() = runBlocking {
+    fun test_number_fact_not_cached_failure(): Unit = runBlocking {
         cloudDataSource.changeConnection(false)
         cacheDataSource.replaceData(emptyList())
 
         try {
-            val actual = repository.numberFact("10")
+            repository.numberFact("10")
         } catch (e: NoInternetConnectionException) {
             assertEquals(false, cacheDataSource.containsCalledList[0])
             assertEquals(1, cacheDataSource.containsCalledList.size)
@@ -117,12 +117,12 @@ class NumbersRepositoryTest {
 
 
     @Test
-    fun test_random_fact_not_cached_failure() = runBlocking {
+    fun test_random_fact_not_cached_failure(): Unit = runBlocking {
         cloudDataSource.changeConnection(false)
         cacheDataSource.replaceData(emptyList())
 
         try {
-            val actual = repository.randomNumberFact()
+            repository.randomNumberFact()
         } catch (e: NoInternetConnectionException) {
             assertEquals(0, cloudDataSource.numberFactCalledCount)
             assertEquals(1, cloudDataSource.randomNumberFactCalledCount)

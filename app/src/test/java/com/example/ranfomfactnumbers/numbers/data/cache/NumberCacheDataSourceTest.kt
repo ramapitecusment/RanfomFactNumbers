@@ -86,8 +86,8 @@ private class TestDao : NumbersDao {
 
     override fun allNumbers() = data
 
-    override fun insert(cache: NumberCache) {
-        data.add(cache)
+    override fun insert(map: NumberCache) {
+        data.add(map)
     }
 
     override fun number(number: String) = data.find { it.number == number }
