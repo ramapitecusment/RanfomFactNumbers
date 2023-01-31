@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
+import com.example.ranfomfactnumbers.numbers.data.NumbersRepository
 import com.example.ranfomfactnumbers.numbers.data.RandomNumberRepository
 import org.koin.java.KoinJavaComponent
 import java.lang.Exception

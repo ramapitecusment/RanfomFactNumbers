@@ -44,6 +44,7 @@ val numbersModule = module {
     factory<HandleRequest> { HandleRequest.Base(get(), get()) }
 
     factory<NumbersRepository> { NumbersRepository.Base(get(), get(), get(), get()) }
+    factory<RandomNumberRepository> { NumbersRepository.Base(get(), get(), get(), get()) }
     factory<HandleDataRequest> { HandleDataRequest.Base(get<HandleDomainError>(), get(), get()) }
     factory { HandleDomainError() }
 
