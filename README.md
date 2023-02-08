@@ -1,4 +1,4 @@
-#Тестовое задание NumbersTestTask
+Тестовое задание NumbersTestTask
 
 Описание задачи Test task for the position of an Android Developer
 
