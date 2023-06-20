@@ -7,11 +7,13 @@ import com.example.ranfomfactnumbers.numbers.data.cache.CacheModule
 import com.example.ranfomfactnumbers.numbers.data.cache.NumberCacheDataSource
 import com.example.ranfomfactnumbers.numbers.data.cache.NumberDataToCache
 import com.example.ranfomfactnumbers.numbers.data.cloud.NumberCloudDataSource
-import com.example.ranfomfactnumbers.numbers.domain.HandleError
-import com.example.ranfomfactnumbers.numbers.domain.HandleRequest
-import com.example.ranfomfactnumbers.numbers.domain.NumberFact
-import com.example.ranfomfactnumbers.numbers.domain.NumbersInteractor
-import com.example.ranfomfactnumbers.numbers.presentation.*
+import com.example.ranfomfactnumbers.numbers.domain.*
+import com.example.ranfomfactnumbers.numbers.presentation.feature.NumbersFactFeature
+import com.example.ranfomfactnumbers.numbers.presentation.feature.NumbersInitialFeature
+import com.example.ranfomfactnumbers.numbers.presentation.feature.RandomNumberFeature
+import com.example.ranfomfactnumbers.numbers.presentation.mapper.NumberUiMapper
+import com.example.ranfomfactnumbers.numbers.presentation.mapper.NumbersResultMapper
+import com.example.ranfomfactnumbers.numbers.presentation.ui.*
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -29,8 +31,11 @@ val numbersModule = module {
     viewModel {
         val communications = NumbersCommunications.Base(get(), get(), get())
         val mapper = NumbersResultMapper(get(), communications)
-        val handleRequest = HandleNumbersRequest.Base(get(), communications, mapper)
-        NumbersViewModel(get(), get(), communications, handleRequest)
+        val interactor = NumbersInteractor.Base(get(), get())
+        val initial = NumbersInitialFeature(interactor, communications, mapper)
+        val randomNumberFact = RandomNumberFeature(interactor, communications, mapper)
+        val numberFact = NumbersFactFeature.Base(interactor, get(), communications, mapper)
+        NumbersViewModel(get(), initial, randomNumberFact, numberFact, communications)
     }
 
     factory<ProgressCommunication> { ProgressCommunication.Base() }
@@ -39,7 +44,6 @@ val numbersModule = module {
 
     factory<NumberFact.Mapper<NumberUi>> { NumberUiMapper() }
 
-    factory<NumbersInteractor> { NumbersInteractor.Base(get(), get()) }
     factory<HandleError<String>> { HandleError.Base(get()) }
     factory<HandleRequest> { HandleRequest.Base(get(), get()) }
 

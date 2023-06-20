@@ -1,6 +1,7 @@
-package com.example.ranfomfactnumbers.numbers.presentation
+package com.example.ranfomfactnumbers.numbers.presentation.ui
 
 import android.widget.TextView
+import com.example.ranfomfactnumbers.main.presentation.Mapper
 
 data class NumberUi(
     private val id: String,

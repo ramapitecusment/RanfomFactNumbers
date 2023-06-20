@@ -1,4 +1,4 @@
-package com.example.ranfomfactnumbers.numbers.presentation
+package com.example.ranfomfactnumbers.numbers.presentation.ui
 
 import com.google.android.material.textfield.TextInputLayout
 

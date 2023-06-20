@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/numbersFragment"
         tools:layout="@layout/fragment_numbers"
-        android:name="com.example.ranfomfactnumbers.numbers.presentation.NumbersFragment">
+        android:name="com.example.ranfomfactnumbers.numbers.presentation.ui.NumbersFragment">
         <action
             android:id="@+id/toDetailsFragment"
             app:destination="@id/detailsFragment" />

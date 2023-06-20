@@ -2,7 +2,7 @@ package com.example.ranfomfactnumbers.numbers.domain
 
 import android.util.Log
 import com.example.ranfomfactnumbers.R
-import com.example.ranfomfactnumbers.numbers.presentation.ManageResources
+import com.example.ranfomfactnumbers.main.presentation.ManageResources
 
 interface HandleError<T> {
 

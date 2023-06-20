@@ -1,6 +1,10 @@
 package com.example.ranfomfactnumbers.numbers.presentation
 
 import com.example.ranfomfactnumbers.numbers.domain.NumberFact
+import com.example.ranfomfactnumbers.numbers.presentation.mapper.NumberUiMapper
+import com.example.ranfomfactnumbers.numbers.presentation.mapper.NumbersResultMapper
+import com.example.ranfomfactnumbers.numbers.presentation.ui.NumberUi
+import com.example.ranfomfactnumbers.numbers.presentation.ui.UiState
 import junit.framework.TestCase.assertEquals
 import org.junit.Test
 

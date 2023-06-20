@@ -1,7 +1,9 @@
 package com.example.ranfomfactnumbers.numbers.presentation
 
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.Observer
+import com.example.ranfomfactnumbers.numbers.presentation.ui.NumberUi
+import com.example.ranfomfactnumbers.numbers.presentation.ui.NumbersCommunications
+import com.example.ranfomfactnumbers.numbers.presentation.ui.UiState
 
 abstract class BaseTest {
 

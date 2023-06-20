@@ -2,13 +2,7 @@ package com.example.ranfomfactnumbers.numbers.domain
 
 import com.example.ranfomfactnumbers.numbers.data.NumbersRepository
 
-interface NumbersInteractor {
-
-    suspend fun init(): NumbersResult
-
-    suspend fun factAboutNumber(number: String): NumbersResult
-
-    suspend fun factAboutRandomNumber(): NumbersResult
+interface NumbersInteractor : NumbersInitialUseCase, NumbersFactUseCase, RandomNumbersFactUseCase {
 
     class Base(
         private val handleRequest: HandleRequest,
@@ -26,5 +20,23 @@ interface NumbersInteractor {
         }
 
     }
+
+}
+
+interface NumbersInitialUseCase {
+
+    suspend fun init(): NumbersResult
+
+}
+
+interface NumbersFactUseCase {
+
+    suspend fun factAboutNumber(number: String): NumbersResult
+
+}
+
+interface RandomNumbersFactUseCase {
+
+    suspend fun factAboutRandomNumber(): NumbersResult
 
 }

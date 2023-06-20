@@ -1,4 +1,4 @@
-package com.example.ranfomfactnumbers.numbers.presentation
+package com.example.ranfomfactnumbers.main.presentation
 
 import android.content.Context
 import androidx.annotation.StringRes

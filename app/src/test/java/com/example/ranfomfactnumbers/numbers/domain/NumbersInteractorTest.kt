@@ -1,7 +1,7 @@
 package com.example.ranfomfactnumbers.numbers.domain
 
 import com.example.ranfomfactnumbers.numbers.data.NumbersRepository
-import com.example.ranfomfactnumbers.numbers.presentation.ManageResources
+import com.example.ranfomfactnumbers.main.presentation.ManageResources
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.runBlocking
 import org.junit.Before

@@ -1,9 +1,19 @@
 package com.example.ranfomfactnumbers.numbers.presentation
 
 import android.view.View
+import com.example.ranfomfactnumbers.main.presentation.DispatchersList
+import com.example.ranfomfactnumbers.main.presentation.ManageResources
 import com.example.ranfomfactnumbers.numbers.domain.NumberFact
 import com.example.ranfomfactnumbers.numbers.domain.NumbersInteractor
 import com.example.ranfomfactnumbers.numbers.domain.NumbersResult
+import com.example.ranfomfactnumbers.numbers.presentation.feature.NumbersFactFeature
+import com.example.ranfomfactnumbers.numbers.presentation.feature.NumbersInitialFeature
+import com.example.ranfomfactnumbers.numbers.presentation.feature.RandomNumberFeature
+import com.example.ranfomfactnumbers.numbers.presentation.mapper.NumberUiMapper
+import com.example.ranfomfactnumbers.numbers.presentation.mapper.NumbersResultMapper
+import com.example.ranfomfactnumbers.numbers.presentation.ui.NumberUi
+import com.example.ranfomfactnumbers.numbers.presentation.ui.NumbersViewModel
+import com.example.ranfomfactnumbers.numbers.presentation.ui.UiState
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.runBlocking
@@ -19,7 +29,9 @@ class NumbersViewModelTest : BaseTest() {
     private lateinit var interactor: TestNumbersInteractor
     private lateinit var manageResources: TestManageResources
     private lateinit var communications: TestNumbersCommunications
-    private lateinit var handleNumbersRequest: HandleNumbersRequest
+    private lateinit var initial: NumbersInitialFeature
+    private lateinit var randomNumberFact: RandomNumberFeature
+    private lateinit var numberFact: NumbersFactFeature
 
     @Before
     fun init() {
@@ -28,10 +40,12 @@ class NumbersViewModelTest : BaseTest() {
         manageResources = TestManageResources()
         communications = TestNumbersCommunications()
         mapper = NumbersResultMapper(NumberUiMapper(), communications)
-        handleNumbersRequest = HandleNumbersRequest.Base(dispatchers, communications, mapper)
 
+        initial = NumbersInitialFeature(interactor, communications, mapper)
+        randomNumberFact = RandomNumberFeature(interactor, communications, mapper)
+        numberFact = NumbersFactFeature.Base(interactor, manageResources, communications, mapper)
 
-        viewModel = NumbersViewModel(interactor, manageResources, communications, handleNumbersRequest)
+        viewModel = NumbersViewModel(dispatchers, initial, randomNumberFact, numberFact, communications)
     }
 
     /**

@@ -1,7 +1,8 @@
-package com.example.ranfomfactnumbers.numbers.presentation
+package com.example.ranfomfactnumbers.numbers.presentation.ui
 
 import android.view.View
 import androidx.lifecycle.LifecycleOwner
+import com.example.ranfomfactnumbers.main.presentation.Communication
 
 interface NumbersCommunications : ObserveNumbers {
 

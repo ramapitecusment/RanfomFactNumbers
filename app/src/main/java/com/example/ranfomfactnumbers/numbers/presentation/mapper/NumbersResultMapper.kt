@@ -1,7 +1,10 @@
-package com.example.ranfomfactnumbers.numbers.presentation
+package com.example.ranfomfactnumbers.numbers.presentation.mapper
 
 import com.example.ranfomfactnumbers.numbers.domain.NumberFact
 import com.example.ranfomfactnumbers.numbers.domain.NumbersResult
+import com.example.ranfomfactnumbers.numbers.presentation.ui.NumbersCommunications
+import com.example.ranfomfactnumbers.numbers.presentation.ui.UiState
+import com.example.ranfomfactnumbers.numbers.presentation.ui.NumberUi
 
 class NumbersResultMapper(
     private val mapper: NumberFact.Mapper<NumberUi>,

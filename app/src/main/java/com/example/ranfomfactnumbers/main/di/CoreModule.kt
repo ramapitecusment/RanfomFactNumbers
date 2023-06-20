@@ -4,8 +4,8 @@ import com.example.ranfomfactnumbers.BuildConfig
 import com.example.ranfomfactnumbers.main.BuildType.DEBUG
 import com.example.ranfomfactnumbers.main.BuildType.RELEASE
 import com.example.ranfomfactnumbers.main.BuildType.MOCK
-import com.example.ranfomfactnumbers.numbers.presentation.DispatchersList
-import com.example.ranfomfactnumbers.numbers.presentation.ManageResources
+import com.example.ranfomfactnumbers.main.presentation.DispatchersList
+import com.example.ranfomfactnumbers.main.presentation.ManageResources
 import com.example.ranfomfactnumbers.peridicworker.WorkManagerWrapper
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
